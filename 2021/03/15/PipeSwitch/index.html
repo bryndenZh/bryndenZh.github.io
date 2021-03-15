@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"bryndenzh.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="简介深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。   这样会导致低效：  对推理任务来说，由于要满足其严格的服务水平目标（Service-Level Objectives），推理集群的供应一般过度，它们不总是以高利用率运行。 训练集群不能抢占训练任务用于推理任务。   调查显示，训练集群">
+  <meta name="description" content="简介 深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。  这样会导致低效：  对推理任务来说，由于要满足其严格的服务水平目标（Service-Level Objectives），推理集群的供应一般过度，它们不总是以高利用率运行。 训练集群不能抢占训练任务用于推理任务。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PipeSwitch">
 <meta property="og:url" content="https://bryndenzh.github.io/2021/03/15/PipeSwitch/index.html">
 <meta property="og:site_name" content="zqy&#39;s blog">
-<meta property="og:description" content="简介深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。   这样会导致低效：  对推理任务来说，由于要满足其严格的服务水平目标（Service-Level Objectives），推理集群的供应一般过度，它们不总是以高利用率运行。 训练集群不能抢占训练任务用于推理任务。   调查显示，训练集群">
+<meta property="og:description" content="简介 深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。  这样会导致低效：  对推理任务来说，由于要满足其严格的服务水平目标（Service-Level Objectives），推理集群的供应一般过度，它们不总是以高利用率运行。 训练集群不能抢占训练任务用于推理任务。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/03/15/PpBGmbOLFA6zVn5.png">
 <meta property="og:image" content="https://i.loli.net/2021/03/15/YFXOCLtlVisuRIj.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/03/15/GNS4qfyriZVPIha.png">
 <meta property="og:image" content="https://i.loli.net/2021/03/15/MOLJFdPRHlvYkfh.png">
 <meta property="article:published_time" content="2021-03-15T08:32:20.000Z">
-<meta property="article:modified_time" content="2021-03-15T13:10:35.025Z">
+<meta property="article:modified_time" content="2021-03-15T13:19:47.679Z">
 <meta property="article:author" content="zqy">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="上下文切换">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-15 16:32:20 / 修改时间：21:10:35" itemprop="dateCreated datePublished" datetime="2021-03-15T16:32:20+08:00">2021-03-15</time>
+              <time title="创建时间：2021-03-15 16:32:20 / 修改时间：21:19:47" itemprop="dateCreated datePublished" datetime="2021-03-15T16:32:20+08:00">2021-03-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,38 +217,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。</p>
-<img src="https://i.loli.net/2021/03/15/PpBGmbOLFA6zVn5.png" alt="image.png" style="zoom:50%;" />
-
+        <h2 id="简介">简介</h2>
+<p>深度学习的任务包括训练和推理任务。训练任务通常吞吐量较高，推理任务要求低延迟。为了满足他们不同的要求，目前的主要做法是为训练和推理分别提供专用的GPU集群。</p>
+<p><img src="https://i.loli.net/2021/03/15/PpBGmbOLFA6zVn5.png" alt="image.png" style="zoom:50%;" /></p>
 <p>这样会导致低效：</p>
 <ul>
 <li>对推理任务来说，由于要满足其严格的服务水平目标（Service-Level Objectives），推理集群的供应一般过度，它们不总是以高利用率运行。</li>
 <li>训练集群不能抢占训练任务用于推理任务。</li>
 </ul>
-<p><img src="https://i.loli.net/2021/03/15/YFXOCLtlVisuRIj.png" alt="image.png"></p>
+<figure>
+<img src="https://i.loli.net/2021/03/15/YFXOCLtlVisuRIj.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <p>调查显示，训练集群和推理集群通常具有相当的计算能力，推理工作负载与用户数量相关，并且在每天显示明确的高峰和低估。在不繁忙的时间应用推理集群进行训练能大大提高利用率。理想情况下，多个深度学习应用程序应该能被部署到一个GPU服务器上，通过像操作系统一样通过任务调度和上下文切换，提高GPU的利用率。</p>
 <p>但是，GPU在切换任务时有很高的开销，不能满足推理任务的时间需求，因为推理任务通常在几十到几百毫秒之间，而GPU切换到没有预加载的DNN模型，需要数秒。现有的解决方案大多是不同任务共享GPU内存，要求DNN模型预先加载进GPU内存中。但是GPU内存相比主存更有限，难以加载多个模型。有时，一个训练任务就可能用尽所有显存。而且，这样没有提供应用程序间的显存隔离。</p>
 <p>本文提出 PipeSwitch，支持GPU服务器上的多个应用程序高效的多路复用，利用深度学习应用程序的特性实现毫秒级的任务切换开销，满足SLO需求，提高GPU利用率。</p>
-<h2 id="总体架构"><a href="#总体架构" class="headerlink" title="总体架构"></a>总体架构</h2><img src="https://i.loli.net/2021/03/15/sGyx7VSYIcB9Q64.png" alt="image.png" style="zoom: 80%;" />
-
+<h2 id="总体架构">总体架构</h2>
+<p><img src="https://i.loli.net/2021/03/15/sGyx7VSYIcB9Q64.png" alt="image.png" style="zoom: 80%;" /></p>
 <p>controller、memory daemon、一个active worker，多个 standby workers。</p>
 <p>控制器将从客户端接收到的一组任务排成队列，根据设定的调度策略进行调度。如果控制器决定调度，它通知active worker 停止，通知 standby worker 初始化。active worker 停止后，控制器通知 memory daemon 和 standby worker 以流水线方式将任务加载到GPU运行。memory daemon 将内存分配给 standby worker 并将模型传输到GPU中，standby worker 成为新的 active worker。</p>
-<h3 id="任务切换开销分析"><a href="#任务切换开销分析" class="headerlink" title="任务切换开销分析"></a>任务切换开销分析</h3><p>将总时间划分为四个阶段：旧任务清理、新任务初始化、GPU内存分配、通过PCIe从CPU传输数据到GPU。</p>
-<h3 id="流水线传输模型"><a href="#流水线传输模型" class="headerlink" title="流水线传输模型"></a>流水线传输模型</h3><p>DNN 模型具有分层结构，计算模式也是逐层向后。一个任务不需要等到整个模型加载到GPU上就可以开始计算，可以逐层进行。</p>
-<p><img src="https://i.loli.net/2021/03/15/qJyuS17ctn3TQK8.png" alt="image.png"></p>
+<h3 id="任务切换开销分析">任务切换开销分析</h3>
+<p>将总时间划分为四个阶段：旧任务清理、新任务初始化、GPU内存分配、通过PCIe从CPU传输数据到GPU。</p>
+<h3 id="流水线传输模型">流水线传输模型</h3>
+<p>DNN 模型具有分层结构，计算模式也是逐层向后。一个任务不需要等到整个模型加载到GPU上就可以开始计算，可以逐层进行。</p>
+<figure>
+<img src="https://i.loli.net/2021/03/15/qJyuS17ctn3TQK8.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <p>最简单的方式是逐层流水线，即传输一层计算一层。但由于传输数据需要调用PCIe，多次调用会增大开销，同时也会增大传输和计算之间同步导致的开销。本文将网络多个层合并为一个组，流水线以组为单元执行，降低开销。</p>
-<p><img src="https://i.loli.net/2021/03/15/vfsNrqYuSEnPAKj.png" alt="image.png"></p>
-<p>F(B, i) 表示：选定网络的前 i 层作为第一组，同时 i + 1 到第 n 层采用最优分组策略，消耗的总时间，可以通过递归求解。 </p>
-<p>本文进一步提出两种剪枝策略。首先，不需要检查所有 n 中情况，如果第一组包含太多层，第一组的计算将会有很大的延迟。设 T(i, j) 是 i 到 j 层的传输时间，E(i, j) 是计算时间。如图，F 存在一个下界，因此考虑 i 的取值时，如果它对应的下界已经比当前最优情况大，这种情况就可以裁剪。</p>
-<p><img src="https://i.loli.net/2021/03/15/GNS4qfyriZVPIha.png" alt="image.png"></p>
+<figure>
+<img src="https://i.loli.net/2021/03/15/vfsNrqYuSEnPAKj.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>F(B, i) 表示：选定网络的前 i 层作为第一组，同时 i + 1 到第 n 层采用最优分组策略，消耗的总时间，可以通过递归求解。 <span class="math display">\[
+F(\{\}, 0) = \mathop{\min}\limits_{i}{\{group(0, i)\}, i + 1}
+\]</span> 本文进一步提出两种剪枝策略。首先，不需要检查所有 n 中情况，如果第一组包含太多层，第一组的计算将会有很大的延迟。设 T(i, j) 是 i 到 j 层的传输时间，E(i, j) 是计算时间。如图，F 存在一个下界，因此考虑 i 的取值时，如果它对应的下界已经比当前最优情况大，这种情况就可以裁剪。</p>
+<figure>
+<img src="https://i.loli.net/2021/03/15/GNS4qfyriZVPIha.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <p>第二，除了第一组，根据计算进度，可以将多个层打包在一组中，同时不影响流水线的效率。如图，当第一组传输结束时，应当选择至少 j* 层，保证第二组的传输时间不小于第一组的计算时间，以减小传输次数。可以裁剪掉 j &lt; j* 的情况。</p>
-<p><img src="https://i.loli.net/2021/03/15/MOLJFdPRHlvYkfh.png" alt="image.png"></p>
+<figure>
+<img src="https://i.loli.net/2021/03/15/MOLJFdPRHlvYkfh.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <p>具体算法递归，复杂度为O(2^n)，但通过如上裁剪可显著降低复杂度。</p>
-<h3 id="统一内存管理"><a href="#统一内存管理" class="headerlink" title="统一内存管理"></a>统一内存管理</h3><p>通常，应用程序通过本地的 cudaMallocManaged 函数分配GPU内存，并将模型的传输委托给 CUDA 管理。深度学习应用程序模型很大，且产生大量中间结果，需要大量GPU内存，CUDA内存管理是为通用应用程序设计的，会带来不必要的开销。</p>
+<h3 id="统一内存管理">统一内存管理</h3>
+<p>通常，应用程序通过本地的 cudaMallocManaged 函数分配GPU内存，并将模型的传输委托给 CUDA 管理。深度学习应用程序模型很大，且产生大量中间结果，需要大量GPU内存，CUDA内存管理是为通用应用程序设计的，会带来不必要的开销。</p>
 <p>深度学习任务主要存储DNN模型和中间结果，模型占用的内存大小是固定的，而中间结果以简单的规则变化。对于推理任务，只有前向传播，中间结果是每一层的输出，计算下一层后就不要再用，可以释放。反向传播时中间结果以先入后出的方式使用，可以使用堆栈处理。</p>
 <p>基于这两个特点，设计内存守护进程管理GPU内存。它在系统启动时使用 cudaMalloc 获取GPU内存，之后在运行时给任务动态分配，消除了任务自行获取内存的开销。不同的任务可能需要同样的模型，但模型只在统一的内存守护进程中存储，减少了内存占用。</p>
 <p>降低 IPC 开销。模型传输到GPU后，内存守护进程需要通知 worker，并将内存处理程序到处给 worker。可以通过 GPU 的 IPC 实现，但是多次调用开销较高。由于DNN的内存分配是确定的，也就是说，给定相同的GPU内存区域和相同的模型，只要内存守护进程和工作程序使用相同的顺序为模型参数分配内存，参数的内存指针将是相同的。因此，内存守护进程可以只使用GPU IPC一次初始化worker，然后使用开销较小的CPU IPC通知worker哪个流水线组已经传输。</p>
-<h3 id="Active-Standby-Worker-Switching"><a href="#Active-Standby-Worker-Switching" class="headerlink" title="Active-Standby Worker Switching"></a>Active-Standby Worker Switching</h3><p>为了保证任务间快速切换和隔离，主要有两种方案。一是不同任务使用单独的进程，发生抢占时，就进程清理新进程初始化造成较大的开销。另一种是让两个任务使用同一个 CUDA 上下文，重用 GPU 环境，但这仍然有旧进程清理的开销，并且没有提供进程级别的隔离。</p>
+<h3 id="active-standby-worker-switching">Active-Standby Worker Switching</h3>
+<p>为了保证任务间快速切换和隔离，主要有两种方案。一是不同任务使用单独的进程，发生抢占时，就进程清理新进程初始化造成较大的开销。另一种是让两个任务使用同一个 CUDA 上下文，重用 GPU 环境，但这仍然有旧进程清理的开销，并且没有提供进程级别的隔离。</p>
 <p>本文采用 active-standby worker 机制，每个 worker 是一个单独的进程，被创建时初始化自己的CUDA上下文，这样发生切换时消除了建立环境的开销。任务停止时，需要释放内存。但由于GPU内存是由PipeSwitch 管理的，旧任务只是删除指向张量数据的指针，新任务的传输可以与这个过程并行，消除了任务清理的开销。</p>
 
     </div>
@@ -324,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">总体架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2%E5%BC%80%E9%94%80%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">任务切换开销分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%BC%A0%E8%BE%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">流水线传输模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">统一内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Active-Standby-Worker-Switching"><span class="nav-number">2.4.</span> <span class="nav-text">Active-Standby Worker Switching</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">总体架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2%E5%BC%80%E9%94%80%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">任务切换开销分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%BC%A0%E8%BE%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">流水线传输模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">统一内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#active-standby-worker-switching"><span class="nav-number">2.4.</span> <span class="nav-text">Active-Standby Worker Switching</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
